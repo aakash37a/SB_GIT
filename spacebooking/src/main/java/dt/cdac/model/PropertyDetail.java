@@ -20,7 +20,7 @@ public class PropertyDetail implements Serializable {
 	@Id
 	private int id;
 
-// Testing...
+
 	@Column(name="accomodation_size")
 	private int accomodationSize;
 
