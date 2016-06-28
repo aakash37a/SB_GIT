@@ -10,8 +10,9 @@ import javax.persistence.*;
  * The persistent class for the property_details database table.
  * 
  */
-
-@NamedQuery(name="PropertyDetail.findAll", query="from PropertyDetail")
+@NamedQueries({
+	@NamedQuery(name = "PropertyDetail.findAll", query = "from PropertyDetail"),
+	@NamedQuery(name = "PropertyDetail.findAllByLocation", query = "from PropertyDetail where location=?") })
 @Entity
 @Table(name="property_details")
 public class PropertyDetail implements Serializable {

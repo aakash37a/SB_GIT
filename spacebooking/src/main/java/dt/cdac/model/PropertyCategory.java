@@ -8,6 +8,7 @@ import javax.persistence.*;
  * The persistent class for the property_category database table.
  * 
  */
+
 @Entity
 @Table(name="property_category")
 @NamedQuery(name="PropertyCategory.findAll", query="from PropertyCategory")

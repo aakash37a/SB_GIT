@@ -11,6 +11,24 @@
 <body>
 	<h3>Properties List</h3>
 	<c:url var="bookProperty" value="/property/booking"></c:url>
+	<c:url var="listProperty" value="/listProperty"></c:url>
+
+	<form action="${listProperty}">
+		<!-- <select id="location" name="location">
+			<option id="Shahdara">Shahdara</option>
+			<option id="DilliHaat">Dilli Haat</option>
+		</select> --> 
+		<select name="location">
+			<c:forEach var="loc" items="${locationList}">
+				<option value="${loc.location}" ${loc.location == selectedLoc ? 'selected="selected"' : ''}>${loc.location}</option>
+			</c:forEach>
+		</select> <input type="submit" value="search">
+	</form>
+
+
+
+
+
 	<c:if test="${!empty propertyList}">
 		<table class="tg" border="1">
 
@@ -37,7 +55,7 @@
 					<td>${property.propertyDesc}</td>
 				</tr>
 				<tr>
-				<!--	<td>${property.propertyId}</td>
+					<!--	<td>${property.propertyId}</td>
 					<td>${property.propertyName}</td>-->
 				</tr>
 				<tr>
