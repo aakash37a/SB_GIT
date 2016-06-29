@@ -23,5 +23,16 @@ public class PropertyDetailService {
 		return service.getPropertyDetails();
 	}
 	
+	@Transactional
+	public List<PropertyDetail> getPropertyDetail(String location){
+		System.out.println("in getPropertyDetail()");
+		return service.getPropertyDetails(location);
+	}
+	
+	@Transactional
+	public List<PropertyDetail> getPropertyDetailById(String propertyId){
+		System.out.println("in getPropertyDetail()");
+		return service.getPropertyDetailsbyId(propertyId);
+	}
 	
 }

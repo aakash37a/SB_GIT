@@ -39,4 +39,27 @@ public class PropertyDetailDaoImpl {
 		logger.info("Property List Fetched Successfully");
 		return p;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<PropertyDetail> getPropertyDetails(String location){
+		//List<PropertyDetail> p = getCurrentSession().createQuery("from PropertyDetail").list();
+		org.hibernate.Query q = (org.hibernate.Query) getCurrentSession().getNamedQuery("PropertyDetail.findAllByLocation");
+	//	q.setParameter(0,1);
+		q.setParameter(0, location);
+		List<PropertyDetail> p = q.list();
+		logger.info("Property List Fetched Successfully");
+		return p;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PropertyDetail> getPropertyDetailsbyId(String propertyId){
+		//List<PropertyDetail> p = getCurrentSession().createQuery("from PropertyDetail").list();
+		org.hibernate.Query q = (org.hibernate.Query) getCurrentSession().getNamedQuery("PropertyDetail.findAllByID");
+	//	q.setParameter(0,1);
+		q.setParameter(0, propertyId);
+		List<PropertyDetail> p = q.list();
+		logger.info("Property List Fetched Successfully");
+		return p;
+	}
 }

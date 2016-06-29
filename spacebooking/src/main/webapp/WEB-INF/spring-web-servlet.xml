@@ -55,6 +55,7 @@
 				<value>dt.cdac.model.PropertyBooking</value>
 				<value>dt.cdac.model.PropertyCategory</value>
 				<value>dt.cdac.model.PropertyRate</value>
+				<value>dt.cdac.model.Location</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

@@ -31,10 +31,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import dt.cdac.model.Location;
 import dt.cdac.model.PropertyBooking;
 import dt.cdac.model.PropertyCategory;
 import dt.cdac.model.PropertyDetail;
 import dt.cdac.model.PropertyRate;
+import dt.cdac.services.LocationService;
 import dt.cdac.services.PropertyBookingService;
 import dt.cdac.services.PropertyCategoriesService;
 import dt.cdac.services.PropertyDetailService;
@@ -56,6 +58,9 @@ public class PropertyDetailsController {
 	private PropertyRateService propertyRateService;
 
 	@Autowired
+	private LocationService locationService;
+
+	@Autowired
 	private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
 	@RequestMapping(value = "endPoints", method = RequestMethod.GET)
@@ -66,17 +71,37 @@ public class PropertyDetailsController {
 	}
 
 	@RequestMapping("/listProperty")
-	public String showAllPropertyDetails(Model model) {
+	public String showAllPropertyDetails(Model model,
+			@RequestParam(defaultValue = "") String location) {
 		/*
 		 * ModelAndView m = new ModelAndView("listproperties");
 		 * m.addObject("details", propertyDetailService.getPropertyDetail());
 		 */
-		List<PropertyDetail> propertyList = propertyDetailService
-				.getPropertyDetail();
-		System.out.println(propertyList);
+		List<Location> locationList = locationService.getLocation();
 
+		model.addAttribute("locationList", locationList);
+
+		System.out.println("location --------------" + location);
+		List<PropertyDetail> propertyList;
+		if (!location.equals("")) {
+			propertyList = propertyDetailService.getPropertyDetail(location);
+		} else {
+			propertyList = propertyDetailService.getPropertyDetail();
+		}
+		System.out.println(propertyList);
 		model.addAttribute("propertyList", propertyList);
+		model.addAttribute("selectedLoc", location);
+
 		return "listproperties";
+	}
+
+	@RequestMapping("showProperty/{propertyId}")
+	public String showProperty(@PathVariable String propertyId,Model model) {
+		List<PropertyDetail> propertyList = propertyDetailService
+				.getPropertyDetailById(propertyId);
+		System.out.println(propertyList);
+		model.addAttribute("propertyList", propertyList);
+		return "showProperty";
 	}
 
 	@RequestMapping("/property/booking/{propertyid}")
@@ -85,20 +110,23 @@ public class PropertyDetailsController {
 			Model model) {
 		propertyBooking.setPropertyId(propertyid);
 		model.addAttribute("daysList", getDaysListByPropertyId(propertyid));
-		model.addAttribute("daysRateMap", getDayRateListByPropertyId(propertyid));
+		model.addAttribute("daysRateMap",
+				getDayRateListByPropertyId(propertyid));
 		return "propertyBooking";
 	}
 
 	@RequestMapping(value = "/property/booking/{propertyid}", method = RequestMethod.POST)
 	public String propertyBook(
 			@Valid @ModelAttribute PropertyBooking propertyBooking,
-			BindingResult bindingResult,Model model,@PathVariable String propertyid) {
+			BindingResult bindingResult, Model model,
+			@PathVariable String propertyid) {
 		model.addAttribute("daysList", getDaysListByPropertyId(propertyid));
-		model.addAttribute("daysRateMap", getDayRateListByPropertyId(propertyid));
+		model.addAttribute("daysRateMap",
+				getDayRateListByPropertyId(propertyid));
 		if (bindingResult.hasErrors()) {
 			return "propertyBooking";
 		} else {
-			//propertyBookingService.addPropertyBooking(propertyBooking);
+			// propertyBookingService.addPropertyBooking(propertyBooking);
 			return "propertyBookingConfirm";
 		}
 	}
