@@ -56,7 +56,7 @@ public class PropertyDetailsController {
 
 	@Autowired
 	private PropertyRateService propertyRateService;
-	
+
 	@Autowired
 	private LocationService locationService;
 
@@ -78,10 +78,9 @@ public class PropertyDetailsController {
 		 * m.addObject("details", propertyDetailService.getPropertyDetail());
 		 */
 		List<Location> locationList = locationService.getLocation();
-		
-		model.addAttribute("locationList",locationList);
-		
-		
+
+		model.addAttribute("locationList", locationList);
+
 		System.out.println("location --------------" + location);
 		List<PropertyDetail> propertyList;
 		if (!location.equals("")) {
@@ -91,13 +90,20 @@ public class PropertyDetailsController {
 		}
 		System.out.println(propertyList);
 		model.addAttribute("propertyList", propertyList);
-		model.addAttribute("selectedLoc",location);
+		model.addAttribute("selectedLoc", location);
 
 		return "listproperties";
 	}
 
-	
-	
+	@RequestMapping("showProperty/{propertyId}")
+	public String showProperty(@PathVariable String propertyId,Model model) {
+		List<PropertyDetail> propertyList = propertyDetailService
+				.getPropertyDetailById(propertyId);
+		System.out.println(propertyList);
+		model.addAttribute("propertyList", propertyList);
+		return "showProperty";
+	}
+
 	@RequestMapping("/property/booking/{propertyid}")
 	public String propertyBooking(@PathVariable String propertyid,
 			@ModelAttribute("propertyBooking") PropertyBooking propertyBooking,

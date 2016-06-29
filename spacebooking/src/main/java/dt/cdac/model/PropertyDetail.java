@@ -12,7 +12,8 @@ import javax.persistence.*;
  */
 @NamedQueries({
 	@NamedQuery(name = "PropertyDetail.findAll", query = "from PropertyDetail"),
-	@NamedQuery(name = "PropertyDetail.findAllByLocation", query = "from PropertyDetail where location=?") })
+	@NamedQuery(name = "PropertyDetail.findAllByLocation", query = "from PropertyDetail where location=?"),
+	@NamedQuery(name = "PropertyDetail.findAllByID", query = "from PropertyDetail where propertyId=?")})
 @Entity
 @Table(name="property_details")
 public class PropertyDetail implements Serializable {

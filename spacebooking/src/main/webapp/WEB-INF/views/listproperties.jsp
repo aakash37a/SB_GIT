@@ -12,15 +12,18 @@
 	<h3>Properties List</h3>
 	<c:url var="bookProperty" value="/property/booking"></c:url>
 	<c:url var="listProperty" value="/listProperty"></c:url>
+	<c:url var="showProperty" value="/showProperty"></c:url>
+	<c:url var="image" value="/resources/Desert.jpg"></c:url>
 
 	<form action="${listProperty}">
 		<!-- <select id="location" name="location">
 			<option id="Shahdara">Shahdara</option>
 			<option id="DilliHaat">Dilli Haat</option>
-		</select> --> 
+		</select> -->
 		<select name="location">
 			<c:forEach var="loc" items="${locationList}">
-				<option value="${loc.location}" ${loc.location == selectedLoc ? 'selected="selected"' : ''}>${loc.location}</option>
+				<option value="${loc.location}"
+					${loc.location == selectedLoc ? 'selected="selected"' : ''}>${loc.location}</option>
 			</c:forEach>
 		</select> <input type="submit" value="search">
 	</form>
@@ -34,34 +37,21 @@
 
 			<c:forEach items="${propertyList}" var="property">
 				<tr>
+					<td><img src="${image}" /></td>
+				</tr>
+				<tr>
 					<!-- <td>${property.id}</td> -->
 					<td><h2>${property.propertyName}</h2></td>
-					<td>${property.accomodationSize}</td>
 				</tr>
-				<tr>
-					<!-- <td>${property.categoryId}</td> -->
-					<td>${property.contactEmail}</td>
-				</tr>
-				<tr>
-					<td>${property.contactName}</td>
-					<td>${property.contactNo}</td>
-				</tr>
-				<tr>
-					<!-- <td>${property.imageFolder}</td> -->
-					<td>${property.location}</td>
-				</tr>
-				<tr>
-					<td>${property.propertyArea}</td>
-					<td>${property.propertyDesc}</td>
-				</tr>
+
 				<tr>
 					<!--	<td>${property.propertyId}</td>
 					<td>${property.propertyName}</td>-->
 				</tr>
 				<tr>
-					<td><img src="resources/Desert.jpg" /></td>
-					<td><a href="${bookProperty}/${property.propertyId}">Book
-							Now</a></td>
+
+					<td><a href="${showProperty}/${property.propertyId}">Read
+							More...</a></td>
 				</tr>
 			</c:forEach>
 		</table>
